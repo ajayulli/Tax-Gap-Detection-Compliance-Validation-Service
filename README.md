@@ -84,10 +84,10 @@ The application uses Hibernate to automatically generate the schema (`spring.jpa
 Pre-filled User data and Rule configurations are loaded via `src/main/resources/data.sql`.
 
 ## Sample Postman Call (Upload Transactions)
-**POST** `http://localhost:8080/api/v1/transactions/upload`
-**Auth**: Basic Auth (user: admin, pass: password)
-**Headers**: Content-Type: application/json
-**Body**:
+- **POST** `http://localhost:8080/api/v1/transactions/upload`
+- **Auth**: Basic Auth (user: admin, pass: password)
+- **Headers**: Content-Type: application/json
+- **Body**:
 ```json
 [
   {
