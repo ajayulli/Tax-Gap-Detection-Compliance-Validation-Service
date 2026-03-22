@@ -86,6 +86,7 @@ Pre-filled User data and Rule configurations are loaded via `src/main/resources/
 ## Sample Postman Call (Upload Transactions)
 **POST** `http://localhost:8080/api/v1/transactions/upload`
 **Auth**: Basic Auth (user: admin, pass: password)
+**Headers**: Content-Type: application/json
 **Body**:
 ```json
 [
