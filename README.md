@@ -15,7 +15,7 @@ A backend service built with Spring Boot 3 and Java 17 that audits financial tra
 - JUnit 5 & Mockito (Coverage: >50%)
 
 ## How to Run
-1. Clone the repository: `git clone [URL]`
+1. Clone the repository: `git clone https://github.com/ajayulli/Tax-Gap-Detection-Compliance-Validation-Service.git`
 2. Ensure Maven and Java 17 are installed.
 3. Run: `mvn spring-boot:run`
 
