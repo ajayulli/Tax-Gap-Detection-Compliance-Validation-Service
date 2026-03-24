@@ -6,6 +6,7 @@ import com.taxaudit.repository.ExceptionRecordRepository;
 import com.taxaudit.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.taxaudit.domain.dto.CustomerExceptionCountDto;
 
 import java.util.List;
 import java.util.Map;
@@ -25,9 +26,13 @@ public class ReportService {
         long totalExceptions = exceptionRepository.count();
         List<SeverityCountDto> severityCounts = exceptionRepository.countBySeverity();
 
+        // --- Requirement 6B: Fetch customer-wise exception counts ---
+        List<CustomerExceptionCountDto> customerCounts = exceptionRepository.countExceptionsByCustomer();
+
         return Map.of(
                 "totalExceptions", totalExceptions,
-                "countsBySeverity", severityCounts
+                "countsBySeverity", severityCounts,
+                "customerWiseExceptions", customerCounts
         );
     }
 }

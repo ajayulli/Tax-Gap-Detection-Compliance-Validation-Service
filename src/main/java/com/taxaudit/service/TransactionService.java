@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -27,6 +28,23 @@ public class TransactionService {
 
             // 1. Log Ingestion
             auditService.logEvent(tx.getTransactionId(), EventType.INGESTION, "{\"status\": \"STARTED\"}");
+
+            // --- Requirement 1: Explicit Data Validation ---
+            if (tx.getAmount() == null || tx.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+                tx.setValidationStatus("FAILURE");
+                tx.setFailureReason("Amount must be present and greater than 0");
+                transactionRepo.save(tx);
+                continue; // Skip math and rules for invalid transactions
+            }
+            if (tx.getDate() == null || tx.getCustomerId() == null || tx.getTaxRate() == null || tx.getReportedTax() == null) {
+                tx.setValidationStatus("FAILURE");
+                tx.setFailureReason("Missing required fields (date, customerId, taxRate, or reportedTax)");
+                transactionRepo.save(tx);
+                continue; // Skip math and rules for invalid transactions
+            }
+
+            // If it passes validation, mark it as a success and proceed
+            tx.setValidationStatus("SUCCESS");
 
             // 2. Core Tax Math
             taxEngine.calculateTaxGap(tx);

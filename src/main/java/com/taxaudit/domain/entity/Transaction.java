@@ -26,6 +26,11 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
+    // --- Requirement 1: Validation Storage ---
+    private String validationStatus; // "SUCCESS" or "FAILURE"
+    @Column(length = 500)
+    private String failureReason;
+
     // Fields calculated by our TaxEngineService
     private BigDecimal expectedTax;
     private BigDecimal taxGap;
