@@ -1,7 +1,7 @@
-package com.taxgap.service;
+package com.taxaudit.service;
 
-import com.taxgap.domain.entity.Transaction;
-import com.taxgap.domain.enums.ComplianceStatus;
+import com.taxaudit.domain.entity.Transaction;
+import com.taxaudit.domain.enums.ComplianceStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
