@@ -2,9 +2,8 @@ package com.taxaudit.controller;
 
 import com.taxaudit.domain.entity.ExceptionRecord;
 import com.taxaudit.domain.enums.Severity;
-import com.taxaudit.repository.ExceptionRecordRepository;
+import com.taxaudit.service.ExceptionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExceptionController {
 
-    private final ExceptionRecordRepository exceptionRepository;
+    private final ExceptionService exceptionService;
 
     @GetMapping
     public ResponseEntity<List<ExceptionRecord>> getAllExceptions() {
-        return ResponseEntity.ok(exceptionRepository.findAll());
+        return ResponseEntity.ok(exceptionService.getAllExceptions());
     }
 
     @GetMapping("/filter")
@@ -28,14 +27,6 @@ public class ExceptionController {
             @RequestParam(required = false) Severity severity,
             @RequestParam(required = false) String ruleName) {
 
-        // Build a dynamic probe for Query By Example based on provided params
-        ExceptionRecord probe = new ExceptionRecord();
-        probe.setCustomerId(customerId);
-        probe.setSeverity(severity);
-        probe.setRuleName(ruleName);
-
-        Example<ExceptionRecord> example = Example.of(probe);
-
-        return ResponseEntity.ok(exceptionRepository.findAll(example));
+        return ResponseEntity.ok(exceptionService.filterExceptions(customerId, severity, ruleName));
     }
 }
